@@ -1,24 +1,9 @@
-# README
+# ✈️ FlightFlight
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tool for profesional operations teams to visualize flight data. Beautiful UI makes it easier for teams to understand the data the need faster. Powered by flight aware.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 3.2.2
+* Rails 7
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
