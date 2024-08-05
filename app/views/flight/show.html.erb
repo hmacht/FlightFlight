@@ -1,0 +1,11 @@
+<!-- app/views/flight/show.html.erb -->
+
+<h1>Flight Information</h1>
+
+<% if @error %>
+  <p><%= @error %></p>
+<% elsif @view_model.flight_data %>
+  <%= render 'route', flight_data: @view_model.flight_data %>
+<% else %>
+  <p>No flight data available.</p>
+<% end %>
