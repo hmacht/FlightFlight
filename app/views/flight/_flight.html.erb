@@ -1,27 +1,43 @@
-<p><%= flight.json[:origin] %></p>
-<br>
-<p><%= flight.json[:destination] %></p>
-
-<div class="origin">
-  <div class="airport">
-    <p><%= flight.json[:origin][:code_iata] %></p>
-    <p><%= flight.json[:origin][:name] %></p>
-  <div>
-
-  <div class="time">
-    <p><%= flight.json[:scheduled_out] %></p>
-    <p><%= flight.departure_status %></p>
+<div class="flight-section">
+  <div class="header">
+    <p><%= flight.date_and_flight_num %></p>
+    <h2><%= flight.title %></h2>
+    <hr>
   </div>
-</div>
 
-<div class="destination">
-  <div class="airport">
-    <p><%= flight.json[:destination][:code_iata] %></p>
-    <p><%= flight.json[:destination][:name] %></p>
-  <div>
+  <div class="origin station">
+    <div class="airport">
+      <p class="code"><%= flight.json[:origin][:code_iata] %></p>
+      <p><%= flight.json[:origin][:name] %></p>
+      <% if flight.data_present?(:terminal_origin) %>
+        <p>Terminal <%= flight.json[:terminal_origin] %></p>
+      <% end %>
+    </div>
 
-  <div class="time">
-    <p><%= flight.json[:scheduled_out] %></p>
-    <p><%= flight.arrival_status %></p>
+    <div class="time">
+      <p class="<%= flight.has_departure_delay? ? "delayed" : "on-time"%>"><%= flight.departure.strftime("%-I:%M %p") %></p>
+      <p class="<%= flight.has_departure_delay? ? "delayed" : "on-time"%> status"><%= flight.departure_status %></p>
+    </div>
+  </div>
+
+  <div class="flight-duration">
+    <span class="divider"></span>
+    <p>XX hrs XX mins</p>
+    <span class="divider"></span>
+  </div>
+
+  <div class="destination station">
+    <div class="airport">
+      <p class="code"><%= flight.json[:destination][:code_iata] %></p>
+      <p><%= flight.json[:destination][:name] %></p>
+      <% if flight.data_present?(:terminal_destination) %>
+        <p>Terminal <%= flight.json[:terminal_destination] %></p>
+      <% end %>
+    </div>
+
+    <div class="time">
+      <p class="<%= flight.has_arrival_delay? ? "delayed" : "on-time"%>"><%= flight.arrival.strftime("%-I:%M %p") %></p>
+      <p class="<%= flight.has_arrival_delay? ? "delayed" : "on-time"%> status"><%= flight.arrival_status %></p>
+    </div>
   </div>
 </div>

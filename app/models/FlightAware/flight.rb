@@ -6,13 +6,13 @@ class FlightAware::Flight
   end
 
   def departure
-    # IF STATUS = SCHEDULED : SCHEDUALED OUT
-    # IF STATUS = TOOK OFF : ACTUAL OUT
+    date_string = data_present?(:actual_out) ? @json[:actual_out] : @json[:scheduled_out]
+    parse_date(date_string)
   end
 
   def arrival
-    # IF STATUS = SCHEDULED : SCHEDUALED OUT
-    # IF STATUS = ARRIVED : ACTUAL IN
+    date_string = data_present?(:actual_in) ? @json[:actual_in] : @json[:scheduled_in]
+    parse_date(date_string)
   end
 
   def departure_status
@@ -35,9 +35,28 @@ class FlightAware::Flight
     @json[:aircraft_type]
   end
 
+  def parse_date(date_string)
+    Time.zone.parse(date_string)
+  end
+
+  def data_present?(key)
+    value = @json[key]
+    value.present? && value != "null"
+  end
+
+  def title
+    "#{@json[:origin][:city]} to #{@json[:destination][:city]}"
+  end
+
+  def date_and_flight_num
+    "#{@json[:operator_iata]} #{@json[:flight_number]} · #{departure.strftime("%a, %d %b")}"
+  end
+
   private
 
   def find_next_flight(json_data)
-    json_data[:flights].first
+    # TODO: ADD ACTUAL LOGIC TO GET PROPER FLIGHT
+    # need to ask for date from user
+    json_data[:flights][4]
   end
 end

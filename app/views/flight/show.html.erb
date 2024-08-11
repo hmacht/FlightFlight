@@ -4,12 +4,12 @@
   <% flight_data_package = @view_model.flight_data_package %>
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <%= render 'map', flight: flight_data_package.flight %>
         <%= render 'timetable', flight: flight_data_package.flight %>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
         <%= render 'flight', flight: flight_data_package.flight %>
         <%= render 'aircraft' %>
     </div>
