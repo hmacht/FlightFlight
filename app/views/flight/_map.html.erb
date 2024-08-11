@@ -1,1 +1,29 @@
-MAP
+<div class="map-section" id="map"></div>
+<script>
+  mapkit.init({
+      authorizationCallback: function(done) {
+
+        fetch('/services/apple_maps_token')
+        .then(response => response.json())
+        .then(result => {
+          console.log(result.token)
+          done(result.token)
+        })
+
+      }
+  });
+
+  var MarkerAnnotation = mapkit.MarkerAnnotation
+  var sfo = new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>)
+
+  var sfoRegion = new mapkit.CoordinateRegion(
+      new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>),
+      new mapkit.CoordinateSpan(0.167647972, 0.354985255)
+  );
+  var map = new mapkit.Map("map");
+
+  var sfoAnnotation = new MarkerAnnotation(sfo, { color: "#f4a56d", title: "<%= airports[:origin][:code_iata] %>", glyphText: "✈️" });
+  map.showItems([sfoAnnotation]);
+
+  map.region = sfoRegion;
+</script>

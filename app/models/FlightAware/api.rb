@@ -24,6 +24,28 @@ class FlightAware::Api
     }
   end
 
+  def get_airport(id)
+    {
+      "airport_code": "KIAH",
+      "alternate_ident": "IAH",
+      "code_icao": "KIAH",
+      "code_iata": "IAH",
+      "code_lid": "IAH",
+      "name": "Houston Bush Int'ctl",
+      "type": "Airport",
+      "elevation": 95,
+      "city": "Houston",
+      "state": "TX",
+      "longitude": -95.3414425,
+      "latitude": 29.9844353,
+      "timezone": "America/Chicago",
+      "country_code": "US",
+      "wiki_url": "http://en.wikipedia.org/wiki/George_Bush_Intercontinental_Airport",
+      "airport_flights_url": "/airports/KIAH/flights",
+      "alternatives": []
+    }
+  end
+
   def get_flights(ident)
     {
       "flights": [

@@ -2,6 +2,7 @@ class FlightAware::FlightDataPackage
   attr_reader :flight
   attr_reader :aircraft
   attr_reader :owner
+  attr_reader :airports
 
   def initialize(ident)
     raise 'Invalid identifier' unless ident.present?
@@ -12,6 +13,7 @@ class FlightAware::FlightDataPackage
     retrieve_flight_data
     retrieve_aircraft_data
     retrieve_owner_data
+    retrieve_airport_data
   end
 
   private
@@ -27,13 +29,26 @@ class FlightAware::FlightDataPackage
     aircraft_type = @flight.aircraft_type
     return unless aircraft_type.present?
 
-    @aircraft = @api.get_aircraft(@fa_flight_id)
+    @aircraft = @api.get_aircraft(aircraft_type)
   # rescue StandardError => e
   #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
   end
 
   def retrieve_owner_data
     @owner = @api.get_owner(@ident)[:owner]
+  # rescue StandardError => e
+  #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
+  end
+
+  def retrieve_airport_data
+    origin_airport_id = @flight.json[:origin][:code_icao]
+    destination_airport_id = @flight.json[:destination][:code_icao]
+    return {} unless origin_airport_id.present? && destination_airport_id.present?
+
+    origin = @api.get_airport(origin_airport_id)
+    destination = @api.get_airport(destination_airport_id)
+
+    @airports = { origin: origin, destination: destination }
   # rescue StandardError => e
   #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
   end
