@@ -1,11 +1,20 @@
-<!-- app/views/flight/show.html.erb -->
-
 <h1>Flight Information</h1>
 
-<% if @error %>
-  <p><%= @error %></p>
-<% elsif @view_model.flight_data %>
-  <%= render 'route', flight_data: @view_model.flight_data %>
+<% if @view_model.has_flight_data_package? %>
+  <% flight_data_package = @view_model.flight_data_package %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <%= render 'map', flight: flight_data_package.flight %>
+        <%= render 'timetable', flight: flight_data_package.flight %>
+      </div>
+
+      <div class="col-md-6">
+        <%= render 'flight', flight: flight_data_package.flight %>
+        <%= render 'aircraft' %>
+    </div>
+  </div>
 <% else %>
   <p>No flight data available.</p>
 <% end %>
+

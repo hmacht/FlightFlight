@@ -1,14 +1,15 @@
 class FlightViewModel
-  attr_reader :flight_data
+  attr_reader :flight_data_package
 
   def initialize(ident)
     @ident = ident
-    @api = FlightAware::Api.new
+
+    validate!
+    set_flight_data_package
   end
 
-  def call
-    validate!
-    build_flight_data
+  def has_flight_data_package?
+    @flight_data_package.present? && @flight_data_package.flight.present?
   end
 
   private
@@ -17,10 +18,7 @@ class FlightViewModel
     raise 'Invalid identifier' unless @ident.present?
   end
 
-  def build_flight_data
-    response = @api.get_flight_data(@ident)
-    @flight_data = response[:flights].first
-  rescue StandardError => e
-    raise "Error fetching flight data: #{e.message}"
+  def set_flight_data_package
+    @flight_data_package = FlightAware::FlightDataPackage.new(@ident)
   end
 end

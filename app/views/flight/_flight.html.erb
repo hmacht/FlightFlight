@@ -1,0 +1,27 @@
+<p><%= flight.json[:origin] %></p>
+<br>
+<p><%= flight.json[:destination] %></p>
+
+<div class="origin">
+  <div class="airport">
+    <p><%= flight.json[:origin][:code_iata] %></p>
+    <p><%= flight.json[:origin][:name] %></p>
+  <div>
+
+  <div class="time">
+    <p><%= flight.json[:scheduled_out] %></p>
+    <p><%= flight.departure_status %></p>
+  </div>
+</div>
+
+<div class="destination">
+  <div class="airport">
+    <p><%= flight.json[:destination][:code_iata] %></p>
+    <p><%= flight.json[:destination][:name] %></p>
+  <div>
+
+  <div class="time">
+    <p><%= flight.json[:scheduled_out] %></p>
+    <p><%= flight.arrival_status %></p>
+  </div>
+</div>
