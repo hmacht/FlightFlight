@@ -1,2 +1,35 @@
-<br><br>
-<p>AIRCRAFT</p>
+<div class="aircraft-section">
+  <h2><%= aircraft[:manufacturer] %> <%= aircraft[:type] %></h2>
+
+  <div class="descriptor-grid">
+    <div class="descriptor">
+      <p>Tail #</p>
+      <p><%= tail_number %></p>
+    </div>
+
+    <div class="descriptor">
+      <p>Engine Count</p>
+      <p><%= aircraft[:engine_count] %></p>
+    </div>
+
+    <div class="descriptor">
+      <p>Engine Type</p>
+      <p><%= aircraft[:engine_type] %></p>
+    </div>
+
+    <div class="descriptor">
+      <p>Description</p>
+      <p><%= aircraft[:description] %></p>
+    </div>
+
+    <div class="descriptor">
+      <p>Owner</p>
+      <p><%= owner[:name] %></p>
+    </div>
+
+    <div class="descriptor">
+      <p>Owner Location</p>
+      <p><%= owner[:location] %>, <%= owner[:location2] %></p>
+    </div>
+  </div>
+<div>

@@ -15,6 +15,17 @@ class FlightAware::Flight
     parse_date(date_string)
   end
 
+  def duration
+    arrival - departure
+  end
+
+  def formated_duration
+    hours = (duration / 3600).to_i
+    minutes = ((duration % 3600) / 60).to_i
+    
+    "#{hours} hrs #{minutes} mins"
+  end
+
   def departure_status
     has_departure_delay? ? "Delayed" : "On Time"
   end
@@ -49,7 +60,11 @@ class FlightAware::Flight
   end
 
   def date_and_flight_num
-    "#{@json[:operator_iata]} #{@json[:flight_number]} · #{departure.strftime("%a, %d %b")}"
+    "#{tail_number} · #{departure.strftime("%a, %d %b")}"
+  end
+
+  def tail_number
+    "#{@json[:operator_iata]} #{@json[:flight_number]}"
   end
 
   private

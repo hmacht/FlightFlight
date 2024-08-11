@@ -33,7 +33,7 @@ class FlightAware::FlightDataPackage
   end
 
   def retrieve_owner_data
-    @owner = @api.get_owner(@ident)
+    @owner = @api.get_owner(@ident)[:owner]
   # rescue StandardError => e
   #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
   end

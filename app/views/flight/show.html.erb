@@ -11,7 +11,7 @@
 
       <div class="col-md-4">
         <%= render 'flight', flight: flight_data_package.flight %>
-        <%= render 'aircraft' %>
+        <%= render 'aircraft', aircraft: flight_data_package.aircraft, owner: flight_data_package.owner, tail_number: flight_data_package.flight.tail_number %>
     </div>
   </div>
 <% else %>
