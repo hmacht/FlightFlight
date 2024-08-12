@@ -1,1 +1,58 @@
-TIMETABLE
+<div class="timetable-section">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Depart</th>
+        <th>Scheduled</th>
+        <th>Estimated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gate Departure</td>
+        <td><%= timetable.scheduled_out %></td>
+        <td><%= timetable.estimated_out %></td>
+      </tr>
+      <tr>
+        <td>Taxi</td>
+        <td><%= timetable.scheduled_taxi_out %></td>
+        <td><%= timetable.estimated_taxi_out %></td>
+      </tr>
+      <tr>
+        <td>Take Off</td>
+        <td><%= timetable.scheduled_off %></td>
+        <td><%= timetable.estimated_off %></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>Arrive</th>
+        <th>Scheduled</th>
+        <th>Estimated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Landing</td>
+        <td><%= timetable.scheduled_on %></td>
+        <td><%= timetable.scheduled_on %></td>
+      </tr>
+      <tr>
+        <td>Taxi</td>
+        <td><%= timetable.scheduled_taxi_in %></td>
+        <td><%= timetable.estimated_taxi_in %></td>
+      </tr>
+      <tr>
+        <td>Gate Arrival</td>
+        <td><%= timetable.scheduled_in %></td>
+        <td><%= timetable.scheduled_in %></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

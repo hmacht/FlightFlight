@@ -111,3 +111,25 @@ $red: #FE2B2F;
   border-radius: 10px;
   overflow: hidden;
 }
+
+.timetable-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  
+  table {
+    background-color: black; 
+    color: white;
+    margin-top: 20px;
+
+    td:first-child, th:first-child {
+      width: 200px;
+    }
+
+    th, td {
+      border-bottom: 1px solid $border_gray;
+      padding: 8px;
+      text-align: left;
+    }
+  }
+}

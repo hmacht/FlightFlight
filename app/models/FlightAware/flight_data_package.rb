@@ -3,6 +3,7 @@ class FlightAware::FlightDataPackage
   attr_reader :aircraft
   attr_reader :owner
   attr_reader :airports
+  attr_reader :timetable
 
   def initialize(ident)
     raise 'Invalid identifier' unless ident.present?
@@ -14,6 +15,8 @@ class FlightAware::FlightDataPackage
     retrieve_aircraft_data
     retrieve_owner_data
     retrieve_airport_data
+
+    @timetable = FlightAware::Timetable.new(@flight)
   end
 
   private
