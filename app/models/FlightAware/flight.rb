@@ -1,4 +1,6 @@
 class FlightAware::Flight
+  include FlightAware::DateAndTime
+  
   attr_reader :json
 
   def initialize(json_data)
@@ -20,10 +22,9 @@ class FlightAware::Flight
   end
 
   def formated_duration
-    hours = (duration / 3600).to_i
-    minutes = ((duration % 3600) / 60).to_i
+    time = seconds_to_hours_and_minutes(duration)
     
-    "#{hours} hrs #{minutes} mins"
+    "#{time[:hours]} hrs #{time[:minutes]} mins"
   end
 
   def departure_status
@@ -44,10 +45,6 @@ class FlightAware::Flight
 
   def aircraft_type
     @json[:aircraft_type]
-  end
-
-  def parse_date(date_string)
-    Time.zone.parse(date_string)
   end
 
   def data_present?(key)

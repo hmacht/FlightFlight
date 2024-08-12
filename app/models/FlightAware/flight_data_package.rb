@@ -1,7 +1,6 @@
 class FlightAware::FlightDataPackage
   attr_reader :flight
   attr_reader :aircraft
-  attr_reader :owner
   attr_reader :airports
   attr_reader :timetable
 
@@ -11,39 +10,42 @@ class FlightAware::FlightDataPackage
     @ident = ident
     @api = FlightAware::Api.new
 
-    retrieve_flight_data
-    retrieve_aircraft_data
-    retrieve_owner_data
-    retrieve_airport_data
-
-    @timetable = FlightAware::Timetable.new(@flight)
+    build_flight_data
+    build_aircraft_data
+    build_airport_data
+    build_timetable
   end
 
   private
 
-  def retrieve_flight_data
+  def build_timetable
+    @timetable = FlightAware::Timetable.new(@flight)
+  end
+
+  def build_flight_data
     response = @api.get_flights(@ident)
     @flight = FlightAware::Flight.new(response)
   # rescue StandardError => e
   #   Rails.logger.error "Error fetching flight data: #{e.message}"
   end
 
-  def retrieve_aircraft_data
+  def build_aircraft_data
     aircraft_type = @flight.aircraft_type
     return unless aircraft_type.present?
 
-    @aircraft = @api.get_aircraft(aircraft_type)
+    owner = @api.get_owner(@ident)[:owner]
+    aircraft = @api.get_aircraft(aircraft_type)
+
+    @aircraft = { 
+      details: aircraft, 
+      owner: owner, 
+      tail_number: @flight.try(:tail_number) || "" 
+    }
   # rescue StandardError => e
   #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
   end
 
-  def retrieve_owner_data
-    @owner = @api.get_owner(@ident)[:owner]
-  # rescue StandardError => e
-  #   Rails.logger.error "Error fetching aircraft data: #{e.message}"
-  end
-
-  def retrieve_airport_data
+  def build_airport_data
     origin_airport_id = @flight.json[:origin][:code_icao]
     destination_airport_id = @flight.json[:destination][:code_icao]
     return {} unless origin_airport_id.present? && destination_airport_id.present?

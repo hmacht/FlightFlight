@@ -1,4 +1,5 @@
 class FlightAware::Timetable
+  include FlightAware::DateAndTime
 
   KEYS = [
     :scheduled_out, :estimated_out, :actual_out,
@@ -40,19 +41,12 @@ class FlightAware::Timetable
 
   def calculate_taxi_time(time1, time2)
     diff = Time.parse(time1) - Time.parse(time2)
-    diff_in_minutes = (diff / 60.0).to_i
-
-    "#{diff_in_minutes}m"
+    "#{seconds_to_minutes(diff)}m"
   end
 
   def build_timetable_attributes
     KEYS.each do |key|
-      instance_variable_set("@#{key}", parse_date(@flight.json[key]))
+      instance_variable_set("@#{key}", date_string_to_time_string(@flight.json[key]))
     end
-  end
-
-  def parse_date(date_string)
-    return "null" if date_string == "null"
-    Time.zone.parse(date_string).strftime("%-I:%M %p")
   end
 end
