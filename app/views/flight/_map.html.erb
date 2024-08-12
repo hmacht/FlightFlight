@@ -1,29 +1,63 @@
 <div class="map-section" id="map"></div>
+
 <script>
   mapkit.init({
-      authorizationCallback: function(done) {
-
-        fetch('/services/apple_maps_token')
-        .then(response => response.json())
-        .then(result => {
-          console.log(result.token)
-          done(result.token)
-        })
-
-      }
+    authorizationCallback: function(done) {
+      fetch('/services/apple_maps_token')
+      .then(response => response.json())
+      .then(result => {
+        done(result.token)
+      })
+    }
   });
 
   var MarkerAnnotation = mapkit.MarkerAnnotation
-  var sfo = new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>)
+  var origin = new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>);
+  var destination = new mapkit.Coordinate(<%= airports[:destination][:latitude] %>, <%= airports[:destination][:longitude] %>);
+  var coordinates = [origin, destination];
 
-  var sfoRegion = new mapkit.CoordinateRegion(
-      new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>),
-      new mapkit.CoordinateSpan(0.167647972, 0.354985255)
-  );
+  var glowLine = new mapkit.PolylineOverlay(coordinates, {
+    style: new mapkit.Style({
+      strokeColor: "#5B97FF",
+      lineWidth: 5,
+    })
+  });
+
+  var polyline = new mapkit.PolylineOverlay(coordinates, {
+    style: new mapkit.Style({
+      strokeColor: "#C7DBFF",
+      lineWidth: 1.8,
+    })
+  });
+
+  var originAnnotation = new MarkerAnnotation(origin, {
+    color: "#6087E2",
+    title: "<%= airports[:origin][:code_iata] %>",
+    glyphText: "🛫"
+  });
+
+  var destinationAnnotation = new MarkerAnnotation(destination, {
+    color: "#6087E2",
+    title: "<%= airports[:destination][:code_iata] %>",
+    glyphText: "🛬"
+  });
+  
   var map = new mapkit.Map("map");
 
-  var sfoAnnotation = new MarkerAnnotation(sfo, { color: "#f4a56d", title: "<%= airports[:origin][:code_iata] %>", glyphText: "✈️" });
-  map.showItems([sfoAnnotation]);
+  map.addOverlay(glowLine);
+  map.addOverlay(polyline);
+  map.addAnnotation(originAnnotation);
+  map.addAnnotation(destinationAnnotation);
 
-  map.region = sfoRegion;
+  var centerLatitude = (origin.latitude + destination.latitude) / 2;
+  var centerLongitude = (origin.longitude + destination.longitude) / 2;
+  var latitudeSpan = Math.abs(origin.latitude - destination.latitude) + 2; // Adding a buffer for visibility
+  var longitudeSpan = Math.abs(origin.longitude - destination.longitude) + 2;
+
+  var region = new mapkit.CoordinateRegion(
+      new mapkit.Coordinate(centerLatitude, centerLongitude),
+      new mapkit.CoordinateSpan(latitudeSpan, longitudeSpan)
+  );
+
+  map.region = region;
 </script>
