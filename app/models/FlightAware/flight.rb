@@ -1,10 +1,12 @@
 class FlightAware::Flight
   include FlightAware::DateAndTime
-  
+
   attr_reader :json
+  attr_reader :timetable
 
   def initialize(json_data)
     @json = find_next_flight(json_data)
+    @timetable = FlightAware::Timetable.new(@json)
   end
 
   def departure

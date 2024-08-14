@@ -2,8 +2,36 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import 'flight';
 
-
 body {
   background-color: black;
   color: white;
+}
+
+.application-footer {
+  background-color: #070707;
+  height: 150px;
+  width: 100%;
+  padding: 30px;
+  margin-top: 40px;
+
+  p {
+    color: #979797;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .flight-aware-link {
+    a {
+      text-decoration: none;
+      background: linear-gradient(90deg, #FFB143, #F676FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    u {
+      text-decoration: underline;
+      text-decoration-color: #F676FF;
+    }
+  }
 }

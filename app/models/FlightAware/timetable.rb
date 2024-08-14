@@ -12,8 +12,8 @@ class FlightAware::Timetable
     attr_reader key
   end
 
-  def initialize(flight)
-    @flight = flight
+  def initialize(flight_json)
+    @flight_json = flight_json
     build_timetable_attributes
   end
 
@@ -34,7 +34,7 @@ class FlightAware::Timetable
   end
 
   def show_actual?
-    @flight.json[:actual_in] != "null"
+    @flight_json[:actual_in] != "null"
   end
 
   private
@@ -46,7 +46,7 @@ class FlightAware::Timetable
 
   def build_timetable_attributes
     KEYS.each do |key|
-      instance_variable_set("@#{key}", date_string_to_time_string(@flight.json[key]))
+      instance_variable_set("@#{key}", date_string_to_time_string(@flight_json[key]))
     end
   end
 end

@@ -5,8 +5,14 @@ $border_gray: #44484D;
 $green: #60E262;
 $red: #FE2B2F;
 
+.sticky-column {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0;
+  z-index: 100;
+}
+
 .flight-section {
-  background-color: $gray_dark;
   padding: 20px;
   border-radius: 10px;
   border: 1px solid $border_gray;
@@ -48,7 +54,7 @@ $red: #FE2B2F;
       font-size: 12px;
       width: 400px;
       text-align: center;
-      background-color: $gray_light;
+      background-color: #3b3b3b9c;
       border-radius: 25px;
       margin: 0 8px 0 8px;
       padding: 2px 5px 2px 5px;
@@ -113,9 +119,6 @@ $red: #FE2B2F;
 }
 
 .timetable-section {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
   
   table {
     background-color: black; 

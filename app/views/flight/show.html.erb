@@ -1,4 +1,4 @@
-<h1>Flight Information</h1>
+<h1>BETA TEST TEST</h1>
 
 <% if @view_model.has_flight_data_package? %>
   <% flight_data_package = @view_model.flight_data_package %>
@@ -6,12 +6,13 @@
     <div class="row">
       <div class="col-md-8">
         <%= render 'map', airports: flight_data_package.airports %>
-        <%= render 'timetable', timetable: flight_data_package.timetable %>
+        <%= render 'timetable', timetable: flight_data_package.flight.timetable %>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4 sticky-column">
         <%= render 'flight', flight: flight_data_package.flight %>
         <%= render 'aircraft', aircraft: flight_data_package.aircraft %>
+      </div>
     </div>
   </div>
 <% else %>

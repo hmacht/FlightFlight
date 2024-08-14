@@ -13,14 +13,9 @@ class FlightAware::FlightDataPackage
     build_flight_data
     build_aircraft_data
     build_airport_data
-    build_timetable
   end
 
   private
-
-  def build_timetable
-    @timetable = FlightAware::Timetable.new(@flight)
-  end
 
   def build_flight_data
     response = @api.get_flights(@ident)
