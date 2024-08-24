@@ -1,9 +1,11 @@
-<div class="aircraft-section">
+<div class="aircraft-section <%= "with-border" if browser.device.mobile? %>">
   <h2><%= aircraft[:details][:manufacturer] %> <%= aircraft[:details][:type] %></h2>
+  <h3>Owned by <%= aircraft[:owner][:name] %></h3>
+  <hr>
 
   <div class="descriptor-grid">
     <div class="descriptor">
-      <p>Tail #</p>
+      <p>Tail Number</p>
       <p><%= aircraft[:tail_number] %></p>
     </div>
 
@@ -15,21 +17,6 @@
     <div class="descriptor">
       <p>Engine Type</p>
       <p><%= aircraft[:details][:engine_type] %></p>
-    </div>
-
-    <div class="descriptor">
-      <p>Description</p>
-      <p><%= aircraft[:details][:description] %></p>
-    </div>
-
-    <div class="descriptor">
-      <p>Owner</p>
-      <p><%= aircraft[:owner][:name] %></p>
-    </div>
-
-    <div class="descriptor">
-      <p>Owner Location</p>
-      <p><%= aircraft[:owner][:location] %>, <%= aircraft[:owner][:location2] %></p>
     </div>
   </div>
 </div>

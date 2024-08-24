@@ -128,8 +128,8 @@ class FlightAware::Api
           "seats_cabin_business": 24,
           "seats_cabin_coach": "null",
           "seats_cabin_first": 50,
-          "gate_origin": "null",
-          "gate_destination": "null",
+          "gate_origin": "13",
+          "gate_destination": "15",
           "terminal_origin": "null",
           "terminal_destination": "null",
           "type": "Airline"

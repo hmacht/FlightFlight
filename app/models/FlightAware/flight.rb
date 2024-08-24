@@ -26,7 +26,7 @@ class FlightAware::Flight
   def formated_duration
     time = seconds_to_hours_and_minutes(duration)
     
-    "#{time[:hours]} hrs #{time[:minutes]} mins"
+    "#{time[:hours]}h #{time[:minutes]}m"
   end
 
   def departure_status

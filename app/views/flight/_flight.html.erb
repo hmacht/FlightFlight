@@ -1,16 +1,23 @@
-<div class="flight-section" style="background-image: url(<%= asset_path('flight_card_background.png') %>)">
+<div class="flight-section">
   <div class="header">
-    <p><%= flight.date_and_flight_num %></p>
-    <h2><%= flight.title %></h2>
-    <hr>
+    <div class="title">
+      <p><%= flight.date_and_flight_num %></p>
+      <h2><%= flight.title %></h2>
+    </div>
+    <div class="icons">
+      <div class="icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+      <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </div>
   </div>
+
+  <hr>
 
   <div class="origin station">
     <div class="airport">
       <p class="code"><%= flight.json[:origin][:code_iata] %></p>
       <p><%= flight.json[:origin][:name] %></p>
       <% if flight.data_present?(:terminal_origin) %>
-        <p>Terminal <%= flight.json[:terminal_origin] %></p>
+        <p>Terminal <%= flight.json[:terminal_origin] %> · Gate <%= flight.json[:gate_origin] %></p>
       <% end %>
     </div>
 
@@ -22,7 +29,7 @@
 
   <div class="flight-duration">
     <span class="divider"></span>
-    <p><%= flight.formated_duration %></p>
+    <p>Total <%= flight.formated_duration %></p>
     <span class="divider"></span>
   </div>
 
@@ -31,7 +38,7 @@
       <p class="code"><%= flight.json[:destination][:code_iata] %></p>
       <p><%= flight.json[:destination][:name] %></p>
       <% if flight.data_present?(:terminal_destination) %>
-        <p>Terminal <%= flight.json[:terminal_destination] %></p>
+        <p>Terminal <%= flight.json[:terminal_destination] %> · Gate <%= flight.json[:gate_destination] %></p>
       <% end %>
     </div>
 
@@ -40,4 +47,8 @@
       <p class="<%= flight.has_arrival_delay? ? "delayed" : "on-time"%> status"><%= flight.arrival_status %></p>
     </div>
   </div>
+
+  <% if !browser.device.mobile? %>
+    <%= render 'aircraft', aircraft: aircraft %>
+  <% end %>
 </div>
