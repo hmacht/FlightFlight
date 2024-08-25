@@ -1,63 +1,65 @@
 <div class="map-section <%= "rounded-corners mt-3" if browser.device.mobile? %>" id="map"></div>
 
-<script>
-  mapkit.init({
-    authorizationCallback: function(done) {
-      fetch('/services/apple_maps_token')
-      .then(response => response.json())
-      .then(result => {
-        done(result.token)
+<% content_for :page_scripts do %>
+  <script>
+    mapkit.init({
+      authorizationCallback: function(done) {
+        fetch('/services/apple_maps_token')
+        .then(response => response.json())
+        .then(result => {
+          done(result.token)
+        })
+      }
+    });
+
+    var MarkerAnnotation = mapkit.MarkerAnnotation
+    var origin = new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>);
+    var destination = new mapkit.Coordinate(<%= airports[:destination][:latitude] %>, <%= airports[:destination][:longitude] %>);
+    var coordinates = [origin, destination];
+
+    var glowLine = new mapkit.PolylineOverlay(coordinates, {
+      style: new mapkit.Style({
+        strokeColor: "#5B97FF",
+        lineWidth: 5,
       })
-    }
-  });
+    });
 
-  var MarkerAnnotation = mapkit.MarkerAnnotation
-  var origin = new mapkit.Coordinate(<%= airports[:origin][:latitude] %>, <%= airports[:origin][:longitude] %>);
-  var destination = new mapkit.Coordinate(<%= airports[:destination][:latitude] %>, <%= airports[:destination][:longitude] %>);
-  var coordinates = [origin, destination];
+    var polyline = new mapkit.PolylineOverlay(coordinates, {
+      style: new mapkit.Style({
+        strokeColor: "#C7DBFF",
+        lineWidth: 1.8,
+      })
+    });
 
-  var glowLine = new mapkit.PolylineOverlay(coordinates, {
-    style: new mapkit.Style({
-      strokeColor: "#5B97FF",
-      lineWidth: 5,
-    })
-  });
+    var originAnnotation = new MarkerAnnotation(origin, {
+      color: "#6087E2",
+      title: "<%= airports[:origin][:code_iata] %>",
+      glyphText: "🛫"
+    });
 
-  var polyline = new mapkit.PolylineOverlay(coordinates, {
-    style: new mapkit.Style({
-      strokeColor: "#C7DBFF",
-      lineWidth: 1.8,
-    })
-  });
+    var destinationAnnotation = new MarkerAnnotation(destination, {
+      color: "#6087E2",
+      title: "<%= airports[:destination][:code_iata] %>",
+      glyphText: "🛬"
+    });
+    
+    var map = new mapkit.Map("map");
 
-  var originAnnotation = new MarkerAnnotation(origin, {
-    color: "#6087E2",
-    title: "<%= airports[:origin][:code_iata] %>",
-    glyphText: "🛫"
-  });
+    map.addOverlay(glowLine);
+    map.addOverlay(polyline);
+    map.addAnnotation(originAnnotation);
+    map.addAnnotation(destinationAnnotation);
 
-  var destinationAnnotation = new MarkerAnnotation(destination, {
-    color: "#6087E2",
-    title: "<%= airports[:destination][:code_iata] %>",
-    glyphText: "🛬"
-  });
-  
-  var map = new mapkit.Map("map");
+    var centerLatitude = (origin.latitude + destination.latitude) / 2;
+    var centerLongitude = (origin.longitude + destination.longitude) / 2;
+    var latitudeSpan = Math.abs(origin.latitude - destination.latitude) + 2; // Adding a buffer for visibility
+    var longitudeSpan = Math.abs(origin.longitude - destination.longitude) + 2;
 
-  map.addOverlay(glowLine);
-  map.addOverlay(polyline);
-  map.addAnnotation(originAnnotation);
-  map.addAnnotation(destinationAnnotation);
+    var region = new mapkit.CoordinateRegion(
+        new mapkit.Coordinate(centerLatitude, centerLongitude),
+        new mapkit.CoordinateSpan(latitudeSpan, longitudeSpan)
+    );
 
-  var centerLatitude = (origin.latitude + destination.latitude) / 2;
-  var centerLongitude = (origin.longitude + destination.longitude) / 2;
-  var latitudeSpan = Math.abs(origin.latitude - destination.latitude) + 2; // Adding a buffer for visibility
-  var longitudeSpan = Math.abs(origin.longitude - destination.longitude) + 2;
-
-  var region = new mapkit.CoordinateRegion(
-      new mapkit.Coordinate(centerLatitude, centerLongitude),
-      new mapkit.CoordinateSpan(latitudeSpan, longitudeSpan)
-  );
-
-  map.region = region;
-</script>
+    map.region = region;
+  </script>
+<% end %>

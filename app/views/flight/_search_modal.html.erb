@@ -1,0 +1,29 @@
+<% content_for :show_modal do %>
+  <div class="modal fade flight-search-modal" id="flightSearchModal" tabindex="-1" aria-labelledby="flightSearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%= form_with url: '#', method: :get do %>
+            <div class="tail-number-input-container mb-3">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <%= text_field_tag :tail_number, nil, class: "form-control tail-number-input", placeholder: "Tail Number (ex: DA 4)", aria: { label: "Tail Number" } %>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-5">
+                <%= date_field_tag :date, nil, class: "form-control date-picker", aria: { label: "Date" } %>
+              </div>
+              <div class="col-5">
+                <%= time_field_tag :time, nil, class: "form-control", aria: { label: "Time" } %>
+              </div>
+
+              <div class="col-2">
+                <button type="button" class="btn search-btn">Search</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

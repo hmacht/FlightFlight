@@ -7,6 +7,13 @@
 
 @import 'flight';
 
+$gray_dark: #181818;
+$gray_light: #3B3B3B;
+$gray_text: #B7B7B7;
+$border_gray: #44484D;
+$green: #60E262;
+$red: #FE2B2F;
+
 body {
   background-color: black;
   color: white;
@@ -37,6 +44,139 @@ body {
     u {
       text-decoration: underline;
       text-decoration-color: #F676FF;
+    }
+  }
+}
+
+.search-container {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 165px);
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    background: transparent;
+    border: 1px solid $border_gray;
+    border-radius: 20px;
+    color: white;
+    width: 600px;
+    padding: 15px 15px 18px 15px;
+
+    .form-control {
+      background-color: transparent;
+      color: white;
+      border: 1px solid $border_gray;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .search-btn {
+      background-color: white;
+      color: $gray_dark;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tail-number-input-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      align-items: center;
+
+      .tail-number-input {
+        font-size: 1.5rem;
+        padding: 0 !important;
+        border: none !important;
+        outline: none !important;
+        background-color: transparent !important;
+        color: white;
+      
+        &::placeholder {
+          color: $border_gray;
+        }
+      
+        &:focus {
+          border-bottom: 2px solid #fff;
+        }
+      }
+    }
+  }
+}
+
+.flight-search-modal {
+
+  .modal-dialog {
+    transform: translate(0, -50%);
+    top: 40%;
+    margin: 0 auto;
+  }
+
+  .modal-content {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid $border_gray;
+    border-radius: 20px;
+    color: white;
+  }
+  
+  .form-control {
+    background-color: transparent;
+    color: white;
+    border: 1px solid $border_gray;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search-btn {
+    background-color: white;
+    color: $gray_dark;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .tail-number-input-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    align-items: center;
+
+    .tail-number-input {
+      font-size: 1.5rem;
+      padding: 0 !important;
+      border: none !important;
+      outline: none !important;
+      background-color: transparent !important;
+      color: white;
+    
+      &::placeholder {
+        color: $border_gray;
+      }
+    
+      &:focus {
+        border-bottom: 2px solid #fff;
+      }
     }
   }
 }

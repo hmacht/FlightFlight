@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'home/index'
-  root 'home#index'
+  root 'flight_search#new'
+  resources :flight_search, only: [:new, :create]
 
   get 'flight/:ident', to: 'flight#show', as: 'flight'
 

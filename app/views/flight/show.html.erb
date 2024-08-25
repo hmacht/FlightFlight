@@ -19,6 +19,8 @@
       </div>
     <% end %>
   </div>
+
+  <%= render 'search_modal', airports: flight_data_package.airports %>
 <% else %>
   <p>No flight data available.</p>
 <% end %>
